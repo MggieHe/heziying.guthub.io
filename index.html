@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>壹技之长教育资源收藏平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #2ec4b6;
+            --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --sidebar-width: 280px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+        
+        /* 左侧导航 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(160deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            padding: 20px 0;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .logo-area {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .search-bar {
+            display: flex;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 15px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .search-bar:focus-within {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
+        }
+        
+        .search-bar input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: none;
+            font-size: 0.95rem;
+            outline: none;
+            background: transparent;
+            color: white;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-bar button {
+            padding: 0 18px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .search-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 导航菜单 */
+        .nav-section {
+            margin-bottom: 25px;
+        }
+        
+        .nav-section h3 {
+            font-size: 1rem;
+            padding: 10px 25px;
+            margin-bottom: 5px;
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-section h3 i {
+            font-size: 1.1rem;
+        }
+        
+        .nav-links {
+            list-style: none;
+        }
+        
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            gap: 10px;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        
+        .nav-links li a i {
+            font-size: 1.05rem;
+            width: 20px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .nav-links li a[data-nav="all"] {
+            color: rgba(76, 201, 240);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .nav-links li a[data-nav="all"] i {
+            color:rgba(76, 201, 240);
+        }
+        
+        .nav-links li a:hover, .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .nav-links li a.active {
+            font-weight: 500;
+        }
+        
+        .nav-links li a.active:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent);
+        }
+        
+        /* 右侧内容 */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px 40px;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(76, 201, 240, 0.05) 0%, rgba(76, 201, 240, 0) 20%),
+                radial-gradient(circle at 90% 80%, rgba(67, 97, 238, 0.05) 0%, rgba(67, 97, 238, 0) 20%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f9fa"/><path d="M0 0L100 100M100 0L0 100" stroke="%23e2e8f0" stroke-width="0.5"/></svg>') center/20px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding-top: 20px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-header h2 i {
+            color: var(--primary);
+        }
+        
+        .stats {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            color: var(--secondary);
+            display: flex;
+            gap: 15px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .card-header h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.25);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+        
+        .card-body {
+            padding: 15px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            background: white;
+        }
+        
+        .card-body p {
+            color: var(--gray);
+            flex-grow: 1;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .card-body p::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            height: 60%;
+            width: 3px;
+            border-radius: 3px;
+        }
+        
+        .card-footer {
+            padding: 0 20px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        
+        .card-link:hover {
+            color: var(--secondary);
+            gap: 8px;
+        }
+        
+        .card-link i {
+            transition: transform 0.3s ease;
+        }
+        
+        .card-link:hover i {
+            transform: translateX(3px);
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+            font-size: 1.2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        /* 新增信息卡片样式 */
+        .info-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .info-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 25px 30px;
+            color: white;
+        }
+        
+        .info-header h2 {
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .info-body {
+            padding: 30px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .info-body p {
+            margin-bottom: 20px;
+        }
+        
+        .info-highlight {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-card h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: var(--light);
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .qr-code img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        
+        .placeholder-qr {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f0f4f8, #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 240px;
+            }
+            
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px 0;
+                max-height: 70vh;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 25px 20px;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            
+            .search-bar button {
+                padding: 0 15px;
+                min-width: 45px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .stats {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .search-bar input {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .search-bar button {
+                padding: 0 12px;
+                min-width: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .info-header h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* 动画效果 */
+        .card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 优化分类颜色 - 渐变配色 */
+        .category-继续教育 .card-header { background: linear-gradient(135deg, #4361ee, #4cc9f0); }
+        .category-人工智能 .card-header { background: linear-gradient(135deg, #81c784, #66bb6a); }
+        .category-通讯网盘 .card-header { background: linear-gradient(135deg, #64b5f6, #42a5f5); }
+        .category-通用资源 .card-header { background: linear-gradient(135deg, #a1887f, #8d6e63); }
+        .category-办公软件 .card-header { background: linear-gradient(135deg, #ff8a65, #ff7043); }
+        .category-软件使用 .card-header { background: linear-gradient(135deg, #ba68c8, #ab47bc); }
+        .category-信息科技 .card-header { background: linear-gradient(135deg, #4db6ac, #26a69a); }
+        .category-数学工具 .card-header { background: linear-gradient(135deg, #ffb74d, #ff9800); }
+        .category-视频加工 .card-header { background: linear-gradient(135deg, #81c784, #66bb6a); }
+        .category-微课制作 .card-header { background: linear-gradient(135deg, #e57373, #f44336); }
+        
+        /* 分类装饰条 */
+        .category-继续教育::before { background: linear-gradient(90deg, #4361ee, #4cc9f0); }
+        .category-人工智能::before { background: linear-gradient(90deg, #81c784, #66bb6a); }
+        .category-通讯网盘::before { background: linear-gradient(90deg, #64b5f6, #42a5f5); }
+        .category-通用资源::before { background: linear-gradient(90deg, #a1887f, #8d6e63); }
+        .category-办公软件::before { background: linear-gradient(90deg, #ff8a65, #ff7043); }
+        .category-软件使用::before { background: linear-gradient(90deg, #ba68c8, #ab47bc); }
+        .category-信息科技::before { background: linear-gradient(90deg, #4db6ac, #26a69a); }
+        .category-数学工具::before { background: linear-gradient(90deg, #ffb74d, #ff9800); }
+        .category-视频加工::before { background: linear-gradient(90deg, #81c784, #66bb6a); }
+        .category-微课制作::before { background: linear-gradient(90deg, #e57373, #f44336); }
+        
+        /* 描述装饰条 */
+        .category-继续教育 .card-body p::before { background: #4361ee; }
+        .category-人工智能 .card-body p::before { background: #81c784; }
+        .category-通讯网盘 .card-body p::before { background: #64b5f6; }
+        .category-通用资源 .card-body p::before { background: #a1887f; }
+        .category-办公软件 .card-body p::before { background: #ff8a65; }
+        .category-软件使用 .card-body p::before { background: #ba68c8; }
+        .category-信息科技 .card-body p::before { background: #4db6ac; }
+        .category-数学工具 .card-body p::before { background: #ffb74d; }
+        .category-视频加工 .card-body p::before { background: #81c784; }
+        .category-微课制作 .card-body p::before { background: #e57373; }
+        
+        /* 卡片悬停效果增强 */
+        .card:hover .card-link i {
+            transform: translateX(5px);
+        }
+        
+        /* 标题动画 */
+        .section-header h2 {
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        /* 分类导航动画 */
+        .nav-links li a {
+            transform-origin: left;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .nav-links li a:hover {
+            transform: scale(1.03);
+        }
+        
+        /* 卡片图标对齐优化 */
+        .card-header h3 i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- 左侧导航 -->
+    <div class="sidebar">
+        <div class="logo-area">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>资源检索</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="搜索网址名称或链接...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="nav-section">
+            <ul class="nav-links" id="category-nav">
+                <li><a href="#" data-category="全部" class="active" data-nav="all"><i class="fas fa-star"></i> 全部收藏</a></li>
+                <li><a href="#" data-category="通用资源"><i class="fas fa-globe"></i> 通用资源</a></li>
+                <li><a href="#" data-category="继续教育"><i class="fas fa-graduation-cap"></i> 继续教育</a></li>
+                <li><a href="#" data-category="人工智能"><i class="fas fa-brain"></i> 人工智能</a></li>
+                <li><a href="#" data-category="办公软件"><i class="fas fa-file-alt"></i> 办公软件</a></li>
+                <li><a href="#" data-category="软件使用"><i class="fas fa-laptop"></i> 软件使用</a></li>
+                <li><a href="#" data-category="信息科技"><i class="fas fa-microchip"></i> 信息科技</a></li>
+                <li><a href="#" data-category="数学工具"><i class="fas fa-calculator"></i> 数学工具</a></li>
+                <li><a href="#" data-category="通讯网盘"><i class="fas fa-cloud"></i> 通讯网盘</a></li>
+                <li><a href="#" data-category="视频加工"><i class="fas fa-video"></i> 视频加工</a></li>
+                <li><a href="#" data-category="微课制作"><i class="fas fa-film"></i> 微课制作</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-section">
+            <h3 class="nav-section-title"><i class="fas fa-info-circle"></i> 使用说明</h3>
+            <ul class="nav-links">
+                <li><a href="#" id="platform-link"><i class="fas fa-book"></i> 平台介绍</a></li>
+                <li><a href="#" id="contact-link"><i class="fas fa-envelope"></i> 联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 右侧内容区域 -->
+    <div class="main-content">
+        <!-- 全部卡片区域 -->
+        <div id="all-cards" class="section active">
+            <div class="section-header">
+                <h2><i class="fas fa-bookmark"></i> 壹技之长教育资源收藏平台</h2>
+                <div class="stats">
+                    <span><i class="fas fa-link"></i> <span id="totalLinks">0</span> 个网址</span>
+                    <span><i class="fas fa-folder"></i> <span id="totalCategories">0</span> 个分类</span>
+                </div>
+            </div>
+            
+            <div class="card-grid" id="card-container">
+                <!-- 卡片将通过JS动态添加 -->
+            </div>
+        </div>
+        
+        <!-- 平台介绍区域 -->
+        <div id="platform-intro" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-book"></i> 平台介绍</h2>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-header">
+                    <h2><i class="fas fa-graduation-cap"></i> 怡园小学教育资源收藏平台</h2>
+                </div>
+                <div class="info-body">
+                    <p>本平台是由<span class="info-highlight">广州市黄埔区怡园小学信息科技科组长何梓莹老师</span>开发的资源整合工具，旨在为教师提供便捷的教育资源访问途径。</p>
+                    
+                    <p>平台汇集了继续教育、人工智能、办公软件、教学工具等十大类教育资源，帮助教师快速找到所需的教学工具和参考资料。</p>
+                    
+                    <p>所有资源均经过精心筛选和分类，确保内容的实用性和可靠性，提升教师的教学效率和专业发展。</p>
+                    
+                    <p class="info-highlight" style="text-align: center; font-size: 1.2rem; padding: 15px; background-color: rgba(67, 97, 238, 0.1); border-radius: 8px;">
+                        <i class="fas fa-copyright"></i> 版权归属：何梓莹老师
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 联系我们区域 -->
+        <div id="contact-us" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope"></i> 联系我们</h2>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-card">
+                    <h3><i class="fab fa-weixin"></i> 个人微信</h3>
+                    <div class="qr-code">
+                        <img src="images/ge.jpg" alt="个人微信二维码" style="width:100%;height:auto;">
+                    </div>
+                    <p>扫描二维码添加微信</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3><i class="fab fa-weixin"></i> 公众号</h3>
+                    <div class="qr-code">
+                        <img src="images/gong.jpg" alt="公众号二维码" style="width:100%;height:auto;">
+                    </div>
+                    <p>扫描二维码关注公众号</p>
+                </div>
+            </div>
+            
+            <div class="info-card" style="margin-top: 30px;">
+                <div class="info-body">
+                    <p style="text-align: center; margin-top: 20px;">
+                        <i class="fas fa-envelope"></i> 邮箱：229558075@qq.com<br>
+                    </p>
+                    <p style="text-align: center; color: var(--gray); margin-top: 20px;">
+                        广州市黄埔区怡园小学<br>
+                        信息科技教研组
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 教育网站数据
+        const links = [
+            // 继续教育
+            {name:"广州市中小学继续教育网",url:"https://i.teacher.gzteacher.com/login/goLoginPage.do",category:"继续教育", desc: "继续教育平台"},
+            {name:"国家中小学智慧教育平台",url:"https://basic.smartedu.cn/",category:"继续教育", desc: "提供丰富的教育资源"},
+            {name:"国家智慧教育公共平台",url:"https://www.smartedu.cn/",category:"继续教育", desc: "整合各类教育资源"},
+            {name:"粤教翔云数字教材应用平台",url:"https://www.gdtextbook.com/",category:"继续教育", desc: "数字教材应用平台"},
+            {name:"智慧人才家园",url:"https://gzrsj.rsj.gz.gov.cn/vsgzhr/login_home.aspx",category:"继续教育", desc: "职称申报网站"},
+            {name:"继续教育证书查询",url:"https://ggfw.hrss.gd.gov.cn/zjjyweb/hisInfoCK/to.do",category:"继续教育", desc: "继续教育证书查询系统"}, 
+            {name:"广东省人社厅网上服务平台",url:"https://ggfw.hrss.gd.gov.cn/isso/login.html",category:"继续教育", desc: "打印社保清单"}, 
+            {name:"广东省继续教育管理系统",url:"https://ggfw.hrss.gd.gov.cn/zjjyweb/",category:"继续教育", desc: "广东省继续教育管理平台"},
+           
+            // 人工智能
+            {name:"AI工具集",url:"https://ai-bot.cn/",category:"人工智能", desc: "AI工具集合"},
+            {name:"deepseek",url:"https://www.deepseek.com/",category:"人工智能", desc: "DeepSeek人工智能平台"},
+            {name:"豆包",url:"https://www.doubao.com/chat/",category:"人工智能", desc: "豆包AI智能助手"},
+            {name:"即梦AI",url:"https://jimeng.jianying.com/ai-tool/home",category:"人工智能", desc: "AI生成图片"},
+            {name:"可灵AI",url:"https://app.klingai.com/cn/",category:"人工智能", desc: "让图片动起来"},
+            {name:"KIMI",url:"https://www.kimi.com/",category:"人工智能", desc: "KIMI智能助手"},
+            {name:"通义千问",url:"https://www.tongyi.com/",category:"人工智能", desc: "快速提取视音频逐字稿"},
+      {name:"秘塔AI",url:"https://metaso.cn/",category:"人工智能", desc: "学术研究工具"},
+            {name:"知犀AI",url:"https://www.swdt.com/",category:"人工智能", desc: "知犀AI工具平台"},
+            {name:"知犀思维导图",url:"https://www.zhixi.com/",category:"人工智能", desc: "知犀思维导图工具"},
+            {name:"讯飞语音合成",url:"https://www.xfzhizuo.cn/make",category:"人工智能", desc: "语音合成"},
+            {name:"海绵音乐",url:"https://www.haimian.com/",category:"人工智能", desc: "AI音乐创作"},
+            {name:"扣子",url:"https://www.coze.cn/",category:"人工智能", desc: "智能体开发"},
+            {name:"智谱清言",url:"https://chatglm.cn/main/alltoolsdetail?lang=zh",category:"人工智能", desc: "智谱清言AI助手"},
+
+
+            // 通讯网盘
+            {name:"百度网盘",url:"http://pan.baidu.com/",category:"通讯网盘", desc: "百度网盘"},
+            {name:"邮箱QQ",url:"https://mail.qq.com/",category:"通讯网盘", desc: "QQ邮箱"},
+            {name:"蓝奏云",url:"https://up.woozooo.com/",category:"通讯网盘", desc: "蓝奏云网盘"},
+            {name:"123网盘",url:"https://www.123pan.com/",category:"通讯网盘", desc: "123网盘服务"},
+            {name:"坚果云",url:"https://www.jianguoyun.com/",category:"通讯网盘", desc: "坚果云网盘"},
+            {name:"阿里云盘",url:"https://www.aliyundrive.com/sign/in",category:"通讯网盘", desc: "阿里云盘"},
+            {name:"微信网页版",url:"https://wx.qq.com/",category:"通讯网盘", desc: "微信网页版"},
+            {name:"邮箱139",url:"https://mail.10086.cn/default.html",category:"通讯网盘", desc: "139邮箱"},
+            {name:"邮箱189",url:"https://webmail30.189.cn/w2/index.html",category:"通讯网盘", desc: "189邮箱"},
+  
+            // 通用资源
+{name:"课堂点名评分系统",url:"https://9aw1xx5w.html2web.com",category:"通用资源", desc: "点名评分"},
+   {name:"计时器",url:"https://cn.piliapp.com/timer/pomodoro/",category:"通用资源", desc: "计时器"},
+         {name:"早读神器",url:"https://xayyqnct.html2web.com",category:"通用资源", desc: "早读神器"},
+            {name:"教室音量监测小助手",url:"https://kn6uq5g3.html2web.com/",category:"通用资源", desc: "音量监测"},
+ {name:"任务打卡墙",url:"https://39pzocs1.html2web.com/",category:"通用资源", desc: "任务打卡"},
+            {name:"随机抽奖转盘",url:"https://cn.piliapp.com/random/wheel/",category:"通用资源", desc: "随机抽奖"},
+            {name:"比赛计分板",url:"https://cn.piliapp.com/scoreboard/?theme=bright",category:"通用资源", desc: "计分板"},
+            {name:"课堂通用辩论计时器",url:"https://8ht9vvyh.html2web.com",category:"通用资源", desc: "课堂辩论"},
+        {name:"随机分组工具",url:"https://cn.piliapp.com/random/team/",category:"通用资源", desc: "分组工具"},
+  {name:"习题打印生成器",url:"https://www.dayin.page/",category:"通用资源", desc: "语数英练习题"},
+        {name:"在线提词器免登录",url:"https://cn.teleprompter-online.com/",category:"通用资源", desc: "提词器"},
+        {name:"免登录免费PDF压缩",url:"https://pdfzap.toolooz.com/",category:"通用资源", desc: "PDF文件压缩"},
+            
+
+
+
+
+
+
+            // 视频加工
+            {name:"抖音TikTok无水印下载",url:"https://dlpanda.com/zh-CN",category:"视频加工", desc: "抖音TikTok无水印下载工具"},
+{name:"哔哩哔哩视频下载",url:"https://snapany.com/zh/bilibili",category:"视频加工", desc: "B站视频解析"},
+            {name:"小红书视频解析",url:"https://xiaohongshu.day/zh/",category:"视频加工", desc: "小红书视频解析"},
+            {name:"央视网",url:"https://tv.cctv.com/",category:"视频加工", desc: "央视网CCTV"},
+            {name:"哔哩哔哩 bilibili",url:"https://www.bilibili.com/",category:"视频加工", desc: "哔哩哔哩视频平台"},
+            {name:"优酷视频",url:"https://www.youku.com/ku/webhome",category:"视频加工", desc: "优酷视频平台"},
+            {name:"腾讯视频",url:"https://v.qq.com/",category:"视频加工", desc: "腾讯视频平台"},
+            {name:"好看视频",url:"https://haokan.baidu.com/",category:"视频加工", desc: "好看视频平台"},
+            
+            // 办公软件
+            {name:"学会设置保护隐私的在线文档",url:"https://mp.weixin.qq.com/s/e8yIetlD7gwQDprEgnXlQw",category:"办公软件", desc: "5分钟学会设置保护隐私的在线文档"},
+            {name:"WORD与EXCL相互转换",url:"https://mp.weixin.qq.com/s/TysiaqtyX8qpQ00sX_MjxA?poc_token=HPdjemijm8SFC2u7TvuOx1wPOUKeIkjMkMLGh87w",category:"办公软件", desc: "题库创建"},
+            {name:"PPT制作——主题封面",url:"https://mp.weixin.qq.com/s/3XAwY65BfZ8ANwVGUnjqMw",category:"办公软件", desc: "主题封面分享"},
+            {name:"PPT——动态人物素材包",url:"https://mp.weixin.qq.com/s/TD2jx8zerkyheQZ4NQAU9Q",category:"办公软件", desc: "动态人物素材包"},
+            {name:"PPT——保存课件素材",url:"https://mp.weixin.qq.com/s/bc7qKklMiyZihnDpylAWWQ",category:"办公软件", desc: "保存课件中的音频素材"},
+            {name:"PPT——动态背景素材",url:"https://mp.weixin.qq.com/s/4s31-q7yckn01br-MlSLCg",category:"办公软件", desc: "动态背景素材分享"},
+            {name:"PPT——电子相册的制作",url:"https://mp.weixin.qq.com/s/oCNgat5-WdL6g9f1zjFLBw",category:"办公软件", desc: "PPT——电子相册的制作"},
+            {name:"PPT——抠图技巧",url:"https://mp.weixin.qq.com/s/uTgCZCr5EBK8yk0iwU-t9A",category:"办公软件", desc: "PPT——抠图技巧"},
+            {name:"PPT——触发器的使用（数学实例）",url:"https://mp.weixin.qq.com/s/HjwOuNZ_h4ZBlv5q7V2T8w",category:"办公软件", desc: "PPT——触发器的使用（数学实例）"},
+            {name:"PPT——保存、撤销与压缩",url:"https://mp.weixin.qq.com/s/6OXnICMK3NJoaDlLBWQeFw",category:"办公软件", desc: "PPT——保存、撤销与压缩"},
+            {name:"PPT——模板的修改",url:"https://mp.weixin.qq.com/s/OaNRWPHoBKxbsE46Bwhn2A",category:"办公软件", desc: "PPT——模板的修改"},
+            {name:"Excel——冻结窗格",url:"https://mp.weixin.qq.com/s/FkQWue44nzWo9NUeG8n65w",category:"办公软件", desc: "Excel——冻结窗格"},
+            {name:"Excel——自定义排序",url:"https://mp.weixin.qq.com/s/ApYPnbhxp-IBtDQzoSf8Nw",category:"办公软件", desc: "按自己的要求排序，进行表格对比分析"},
+            {name:"Excel——证件照换底",url:"https://mp.weixin.qq.com/s/XNLO4P0O5ab6BYv8BxuehA",category:"办公软件", desc: "Excel——证件照换底"},
+            {name:"金山文档",url:"https://www.kdocs.cn/",category:"办公软件", desc: "金山文档在线协作平台"},
+            {name:"腾讯文档",url:"https://docs.qq.com/desktop/",category:"办公软件", desc: "腾讯文档工具"},
+            {name:"石文档墨",url:"https://shimo.im/loginByPassword",category:"办公软件", desc: "石文档墨在线文档工具"},
+            {name:"轻雀文档",url:"https://passport.qingque.cn/",category:"办公软件", desc: "轻雀文档平台"},
+            
+            // 软件使用
+            {name:"实用的录屏软件",url:"https://mp.weixin.qq.com/s/0H7JUaC57sXS88HA2ehfXQ",category:"软件使用", desc: "一款比较实用的录屏软件——录屏王"},
+            {name:"无损视频压缩软件",url:"https://mp.weixin.qq.com/s/GWB4iIAQBES6ls8pfbkgpQ",category:"软件使用", desc: "一款比较实用的压缩软件——小丸工具箱"},
+            {name:"实用视频编辑软件",url:"https://mp.weixin.qq.com/s/8kaCxG8Mq6gv162OPpqOEg",category:"软件使用", desc: "视频剪辑软件——wondershare的使用"},
+            {name:"生成视频逐字稿",url:"https://mp.weixin.qq.com/s/_opa38G9ciEriwIqHMtBFQ",category:"软件使用", desc: "网易见外工作台——生成视频逐字稿"},
+            {name:"快速导入通讯录到手机",url:"https://mp.weixin.qq.com/s/1JCaFm1giW6L0CC5ui64rA",category:"软件使用", desc: "快速导入通讯录到手机"},
+            {name:"将纸质版材料转可编辑文档",url:"https://mp.weixin.qq.com/s/KcOjnu1ExQg3aCcgRG9YoQ",category:"软件使用", desc: "一款将纸质版材料转可编辑文档的软件——蜜蜂试卷"},
+            {name:"希沃白板的使用",url:"https://mp.weixin.qq.com/s/osdfrvhEG0tKz3NFjjvlsA",category:"软件使用", desc: "希沃的使用"},
+            {name:"希沃克隆、移动与锁定",url:"https://mp.weixin.qq.com/s/mEe8GDZpYOlhDjmG9nU8GA",category:"软件使用", desc: "数学与信息融合（数一数，比多少，位置）"},
+            {name:"App Inventor的使用",url:"https://mp.weixin.qq.com/s/hpGchropybjWqEmHLmTZRg",category:"软件使用", desc: "App Inventor的使用"},
+            {name:"粤教翔云在小学数学中的应用",url:"https://mp.weixin.qq.com/s/F2TSTh0AnYO_PhR_7VX6fA",category:"软件使用", desc: "新技术与学科融合——例谈粤教翔云数字教材在小学数学中的应用"},
+            {name:"添加或遮盖水印的软件",url:"https://mp.weixin.qq.com/s/bThQZmJxA9ojGsj5SDvW-w",category:"软件使用", desc: "水印管家——可添加或遮盖水印的软件"},
+            {name:"格式工厂的使用",url:"https://mp.weixin.qq.com/s/i4-4Ysu-u_1YDeenbxDo7Q",category:"软件使用", desc: "格式工厂的使用"},
+           
+            // 信息科技
+{name:"信息科技课标2022",url:"https://edui123.com/xxkb/#/",category:"信息科技", desc: "信息科技新课标"},
+ {name:"打字鸭",url:"https://daziya.com/courses/",category:"信息科技", desc: "免费在线打字练习平台"},
+ {name:"习字丛林",url:"https://www.edclub.com/zh/library/%E4%B9%A0%E5%AD%97%E4%B8%9B%E6%9E%97",category:"信息科技", desc: "一款全面的拼音打字练习教程"},
+            {name:"blockly图形化编程",url:"https://blockly.games/",category:"信息科技", desc: "图形化编程学习网站"},
+           {name:"I CODE 图形化编程",url:"https://tsingfunlee.github.io/Blockly-games/Selectgame.html",category:"信息科技", desc: "图形化编程学习网站"},
+ {name:"流程图绘制工具",url:"https://nqelciyu.html2web.com",category:"信息科技", desc: "流程图绘制工具"},
+            {name:"科普中国",url:"https://www.kepuchina.cn/",category:"信息科技", desc: "科普网站"},
+            
+            
+            // 数学工具
+  {name:"数学课标2022",url:"https://edui123.com/sxkb/#/",category:"数学工具", desc: "数学新课标"},
+            {name:"小学口算题卡互动网页",url:"https://1d7jvk6k.html2web.com",category:"数学工具", desc: "怡园小学专用口算题卡"},
+            {name:"基本口算练习出题神器",url:"https://f0roftmg.html2web.com/",category:"数学工具", desc: "口算题出题"},
+            {name:"24点出题器",url:"https://uz59dml2.html2web.com",category:"数学工具", desc: "24点出题器"},
+           {name:"对称轴",url:"https://kbthce6x.html2web.com",category:"数学工具", desc: "平面图形的对称轴演示"},
+           {name:"百数表",url:"https://k3nwb2or.html2web.com",category:"数学工具", desc: "百数表拼图游戏"},
+ {name:"摆正方形",url:"https://i8pdqexb.html2web.com",category:"数学工具", desc: "摆正方形"},
+{name:"摆正方体",url:"https://7v7h35pz.html2web.com",category:"数学工具", desc: "摆正方体"},
+            {name:"观察组合正方体",url:"https://edui123.com/3d/",category:"数学工具", desc: "组合正方体"},
+
+ {name:"正方体展开图 演示",url:"https://uienws7d.html2web.com/",category:"数学工具", desc: "交互式正方体展开图 (Cube Net) 演示"},
+ {name:"平四面积公式演示",url:"https://xlf0offy.html2web.com/",category:"数学工具", desc: "平行四边形面积公式交互式演示"},
+   {name:"数角演示",url:"https://v06irtm0.html2web.com/",category:"数学工具", desc: "数角"},
+  {name:"圆周率的探究",url:"https://r0j1dnlk.html2web.com",category:"数学工具", desc: "圆周率的探究"},
+            {name:"可能性骰子",url:"https://cn.piliapp.com/random/dice/?num=1",category:"数学工具", desc: "五下可能性"},
+            {name:"可能性硬币",url:"https://cn.piliapp.com/random/coin/",category:"数学工具", desc: "五下可能性"},
+   {name:"两车相遇问题教学",url:"https://e6f62tvh.html2web.com/",category:"数学工具", desc: "相遇问题"},
+
+
+
+
+
+
+
+
+            // 微课制作
+            {name:"如何制作好的微课",url:"https://mp.weixin.qq.com/s/HN1zGkvWxJCtmtJF0FiOYw",category:"微课制作", desc: "精品微课设计与创作——如何制作好的微课"},
+            {name:"MG转场效果",url:"https://mp.weixin.qq.com/s/WZVqevkHL_j197IGaqWYcQ",category:"微课制作", desc: "PPT动画微课——MG转场效果"},
+            {name:"动画微课四大技巧",url:"https://mp.weixin.qq.com/s/ZLsJZeyedLDBDJWFHG1vGQ",category:"微课制作", desc: "PPT动画微课——四大技巧"},
+            {name:"动态人物素材包",url:"https://mp.weixin.qq.com/s/TD2jx8zerkyheQZ4NQAU9Q",category:"微课制作", desc: "PPT动画微课——动态人物素材包"},
+            {name:"基于PPT微课的制作",url:"https://mp.weixin.qq.com/s/GdwOqzChX1ZoHZOG_vOphw",category:"微课制作", desc: "基于PPT微课的制作"},
+        ];
+
+        // 获取所有分类
+        let categories = [...new Set(links.map(link => link.category))];
+        
+        // DOM元素
+        const categoryNav = document.getElementById('category-nav');
+        const cardContainer = document.getElementById('card-container');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const totalLinksEl = document.getElementById('totalLinks');
+        const totalCategoriesEl = document.getElementById('totalCategories');
+        const platformLink = document.getElementById('platform-link');
+        const contactLink = document.getElementById('contact-link');
+        const allSections = document.querySelectorAll('.section');
+        
+        // 初始化页面
+        function initPage() {
+            // 更新统计信息
+            totalLinksEl.textContent = links.length;
+            totalCategoriesEl.textContent = categories.length;
+            
+            // 渲染所有卡片
+            renderCards(links);
+            
+            // 添加分类导航事件
+            document.querySelectorAll('#category-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 更新活动状态
+                    document.querySelectorAll('#category-nav a').forEach(a => {
+                        a.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // 获取分类
+                    const category = this.dataset.category;
+                    
+                    // 过滤链接
+                    let filteredLinks = links;
+                    if (category !== '全部') {
+                        filteredLinks = links.filter(link => link.category === category);
+                    }
+                    
+                    // 切换到卡片视图
+                    switchSection('all-cards');
+                    
+                    // 渲染卡片
+                    renderCards(filteredLinks);
+                });
+            });
+            
+            // 平台介绍链接事件
+            platformLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                switchSection('platform-intro');
+            });
+            
+            // 联系我们链接事件
+            contactLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                switchSection('contact-us');
+            });
+            
+            // 搜索功能
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                if (!searchTerm) {
+                    // 如果没有搜索词，显示当前分类
+                    const activeCategory = document.querySelector('#category-nav a.active');
+                    const category = activeCategory.dataset.category;
+                    
+                    let filteredLinks = links;
+                    if (category !== '全部') {
+                        filteredLinks = links.filter(link => link.category === category);
+                    }
+                    renderCards(filteredLinks);
+                    return;
+                }
+                
+                // 执行搜索
+                const filteredLinks = links.filter(link => 
+                    link.name.toLowerCase().includes(searchTerm) || 
+                    link.url.toLowerCase().includes(searchTerm) ||
+                    link.category.toLowerCase().includes(searchTerm)
+                );
+                
+                renderCards(filteredLinks);
+            }
+            
+            // 搜索事件
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // 添加输入框清除功能
+            searchInput.addEventListener('input', function() {
+                if (this.value === '') {
+                    performSearch();
+                }
+            });
+        }
+        
+        // 切换显示部分
+        function switchSection(sectionId) {
+            allSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        // 渲染卡片
+        function renderCards(linksToRender) {
+            cardContainer.innerHTML = '';
+            
+            if (linksToRender.length === 0) {
+                cardContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>没有找到匹配的网址</h3>
+                        <p>请尝试其他关键词或分类</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            linksToRender.forEach(link => {
+                const card = document.createElement('div');
+                card.className = `card category-${link.category}`;
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3><i class="fas fa-link"></i> ${link.name}</h3>
+                        <div class="category-tag">${link.category}</div>
+                    </div>
+                    <div class="card-body">
+                        <p>${link.desc}</p>
+                        <div class="card-footer">
+                            <a href="${link.url}" target="_blank" class="card-link">
+                                访问网站 <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                cardContainer.appendChild(card);
+            });
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
